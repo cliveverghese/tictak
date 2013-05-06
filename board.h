@@ -18,6 +18,7 @@ typedef std::pair<int, int> position;
 **/ 
 
 class board{
+	protected:
 	char bd[3][3];
 	
 	public:
@@ -27,16 +28,23 @@ class board{
 	* the game is not yet over.
 	**/
 	enum {
-		WIN_X,
-		WIN_O,
+		WIN,
 		DRAW,
-		CONTD
+		CONTD,
+		INVALID
 	};
 	
 	/**
 	* Constructor to initilize all values with a ' '
 	**/
 	board();
+	
+	/**
+	* Check the status of the game at the point of the call.
+	* @param player The player whose status is to be checked
+	* @return Value from the enumeration.
+	**/
+	int check_status(char player);
 	
 	/**
 	* Make a move on the board. 
