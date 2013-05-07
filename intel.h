@@ -6,6 +6,8 @@
 class intel: public board{
 	public : 
 	
+	position next_move_minimax(char player,char oponent);
+	
 	/**
 	* Predict the next move.
 	* @param player The player whose move is to be pridicted

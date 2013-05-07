@@ -34,7 +34,7 @@ int board::check_status(char player){
 			if( bd[j][j] != player){
 				flag_d1 = false;
 			}
-			if( bd[j][3-j] != player){
+			if( bd[j][2-j] != player){
 				flag_d2 = false;
 			}
 			
