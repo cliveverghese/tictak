@@ -26,7 +26,6 @@ void GLFWCALL display(){
 	glEnd();
 	glfwSwapBuffers();
 }
-
 void draw_x(int xoffset, int yoffset) {
 	glBegin(GL_LINES);
 		glVertex2f(0.1-0.5+0.5*xoffset,0.1+0.5-0.5*yoffset);
@@ -34,8 +33,9 @@ void draw_x(int xoffset, int yoffset) {
 		glVertex2f(-0.1-0.5+0.5*xoffset,0.1+0.5-0.5*yoffset);
 		glVertex2f(0.1-0.5+0.5*xoffset,-0.1+0.5-0.5*yoffset);
 	glEnd();
+	glfwSwapBuffers();
 }
-void draw_o(float xoffset, float yoffset) 
+void draw_o(int xoffset, int yoffset) 
 {
 	int ii;
 	int num_segments = 100;
@@ -58,6 +58,14 @@ void draw_o(float xoffset, float yoffset)
 		y = s * t + c * y;
 	} 
 	glEnd(); 
+	glfwSwapBuffers();
+}
+void strikethrough(int startx, int starty, int endx, int endy) {
+	glBegin(GL_LINES);
+		glVertex2f(-0.5+0.5*startx, 0.5-0.5*starty);
+		glVertex2f(-0.5+0.5*endx, 0.5-0.5*endy);
+	glEnd();
+	glfwSwapBuffers();
 }
 void GLFWCALL process_click() {
 	int x, y;
@@ -109,7 +117,11 @@ void GLFWCALL window_thread(void * arg){
 	while(glfwGetWindowParam(GLFW_OPENED)){
 		display();
 		draw_x(2, 2);
+		draw_o(0, 0);
+		draw_o(0, 1);
+		draw_o(0, 2);
 		draw_o(1, 1);
+		strikethrough(0, 0, 0, 2);
 	}
 	cond = 0;
 	return;
