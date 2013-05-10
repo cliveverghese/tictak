@@ -23,58 +23,53 @@ void GLFWCALL display(){
 	glEnd();
 	glfwSwapBuffers();
 }
-int GLFWCALL process_click() {
+void GLFWCALL process_click() {
 	int x, y;
 	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         glfwGetMousePos(&x, &y);
         if(y < 133) {
             if(x < 133) {
-                return 1;
+                printf("1\n");
             }
             else if (x > 266) {
-                return 3;
+                printf("3\n");
             }
             else {
-                return 2;
+                printf("2\n");
             }
         }
         else if(y > 266) {
             if(x < 133) {
-                return 7;
+                printf("7\n");
             }
             else if (x > 266) {
-                return 9;
+                printf("9\n");
             }
             else {
-                return 8;
+                printf("8\n");
             }   
         }
         else {
             if(x < 133) {
-                return 4;
+                printf("4\n");
             }
             else if (x > 266) {
-                return 6;
+                printf("6\n");
             }
             else {
-                return 5;
+                printf("5\n");
             }   
         }
     }
 }
 void GLFWCALL window_thread(){
-	int grid_id;
 	glfwInit();
 	printf("Running\n");
 	glfwOpenWindow(400,400,8,8,8,0,24,0,GLFW_WINDOW);
 	glfwSetWindowSizeCallback(reshape);
 	while(glfwGetWindowParam(GLFW_OPENED)){
 		display();
-		grid_id = 0;
-		grid_id = process_click();
-		if(grid_id != 0) {
-			printf("%d\n", grid_id);
-		}
+		glfwSetMouseButtonCallback(process_click);
 	}
 	return;
 }
