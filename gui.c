@@ -67,9 +67,10 @@ void GLFWCALL window_thread(){
 	printf("Running\n");
 	glfwOpenWindow(400,400,8,8,8,0,24,0,GLFW_WINDOW);
 	glfwSetWindowSizeCallback(reshape);
+	glfwSetMouseButtonCallback(process_click);
 	while(glfwGetWindowParam(GLFW_OPENED)){
 		display();
-		glfwSetMouseButtonCallback(process_click);
+
 	}
 	return;
 }
