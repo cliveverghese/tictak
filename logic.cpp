@@ -15,6 +15,8 @@ int main(){
 
 		int x,y;
 		if(cur == 'O'){
+			/*ai.set_board(bd);
+			status = bd.make_move(cur,ai.next_move_minimax(cur,next));*/
 			cin>>x>>y;
 			status = bd.make_move(cur,make_pair(x,y));
 			for( int i = 0; i < 3 ; i++ ){
