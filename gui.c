@@ -10,6 +10,7 @@ void GLFWCALL reshape(int w, int h){
 }
 
 void GLFWCALL display(){
+	glLoadIdentity();
 	glBegin(GL_LINES);
 		glVertex2f(0.75,-0.25);
 		glVertex2f(-0.75,-0.25);
@@ -24,7 +25,7 @@ void GLFWCALL display(){
 }
 
 
-void GLFWCALL window_thread(){
+void GLFWCALL window_thread(void * arg){
 	glfwInit();
 	printf("Running\n");
 	glfwOpenWindow(500,500,8,8,8,0,24,0,GLFW_WINDOW);
@@ -38,7 +39,8 @@ void GLFWCALL window_thread(){
 int main(){
 	GLFWthread thread;
 	printf("Testing\n");
-	window_thread();
+	thread = glfwCreateThread(window_thread,NULL);
+	getchar();
 	printf("%d\n",thread);
 
 	glfwTerminate();
