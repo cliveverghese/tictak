@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <GL/glfw.h>
+#include <math.h>
 
 int cond;
 
@@ -24,6 +25,39 @@ void GLFWCALL display(){
 		glVertex2f(-0.75,0.25);
 	glEnd();
 	glfwSwapBuffers();
+}
+
+void draw_x(int xoffset, int yoffset) {
+	glBegin(GL_LINES);
+		glVertex2f(0.1-0.5+0.5*xoffset,0.1+0.5-0.5*yoffset);
+		glVertex2f(-0.1-0.5+0.5*xoffset,-0.1+0.5-0.5*yoffset);
+		glVertex2f(-0.1-0.5+0.5*xoffset,0.1+0.5-0.5*yoffset);
+		glVertex2f(0.1-0.5+0.5*xoffset,-0.1+0.5-0.5*yoffset);
+	glEnd();
+}
+void draw_o(float xoffset, float yoffset) 
+{
+	int ii;
+	int num_segments = 100;
+	float theta = 2*3.1415926/num_segments;
+	float c = cosf(theta);//precalculate the sine and cosine
+	float s = sinf(theta);
+	float t;
+
+	float x = 0.1;//we start at angle = 0 
+	float y = 0; 
+    
+	glBegin(GL_LINE_LOOP); 
+	for(ii = 0; ii < num_segments; ii++) 
+	{ 
+		glVertex2f(x + 0.5*xoffset - 0.5, y - 0.5*yoffset + 0.5);//output vertex 
+        
+		//apply the rotation matrix
+		t = x;
+		x = c * x - s * y;
+		y = s * t + c * y;
+	} 
+	glEnd(); 
 }
 void GLFWCALL process_click() {
 	int x, y;
@@ -74,7 +108,8 @@ void GLFWCALL window_thread(void * arg){
 	glfwSetMouseButtonCallback(process_click);
 	while(glfwGetWindowParam(GLFW_OPENED)){
 		display();
-
+		draw_x(2, 2);
+		draw_o(1, 1);
 	}
 	cond = 0;
 	return;
