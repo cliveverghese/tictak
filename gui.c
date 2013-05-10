@@ -67,6 +67,7 @@ void GLFWCALL process_click() {
 void GLFWCALL window_thread(void * arg){
 
 	printf("Running\n");
+	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE,GL_TRUE);
 	glfwOpenWindow(400,400,8,8,8,0,24,0,GLFW_WINDOW);
 	//glOrtho(0.0,400.0, 0.0, 400.0,-1,1);
 	glfwSetWindowSizeCallback(reshape);
