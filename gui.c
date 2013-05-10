@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <GL/glfw.h>
 
+int cond;
+
 void GLFWCALL reshape(int w, int h){
 	printf("Resizing\n");
 	glViewport(0,0, (GLsizei) w, (GLsizei) h);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//gluOrtho2D(0.0,500.0, 0.0, 500.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0,500.0, 0.0, 500.0,-1,1);
 }
 
 void GLFWCALL display(){
@@ -62,24 +64,28 @@ void GLFWCALL process_click() {
         }
     }
 }
-void GLFWCALL window_thread(){
-	glfwInit();
+void GLFWCALL window_thread(void * arg){
+
 	printf("Running\n");
 	glfwOpenWindow(400,400,8,8,8,0,24,0,GLFW_WINDOW);
+	//glOrtho(0.0,400.0, 0.0, 400.0,-1,1);
 	glfwSetWindowSizeCallback(reshape);
 	glfwSetMouseButtonCallback(process_click);
 	while(glfwGetWindowParam(GLFW_OPENED)){
 		display();
 
 	}
+	cond = 0;
 	return;
 }
 
 int main(){
 	GLFWthread thread;
+	glfwInit();
 	printf("Testing\n");
-	window_thread();
+	cond = 1;
+	thread = glfwCreateThread(window_thread,NULL);
 	printf("%d\n",thread);
-
+	while(cond);
 	glfwTerminate();
 }	
